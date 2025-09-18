@@ -3,11 +3,17 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight, Camera } from "lucide-react";
 
 const imgs = [
-  { src: "/images/caro1.jpg", alt: "Couple 1" },
-  { src: "/images/caro2.jpg", alt: "Couple 2" },
-  { src: "/images/caro3.jpg", alt: "Couple 3" },
-  { src: "/images/caro4.jpg", alt: "Couple 4" },
-  { src: "/images/caro5.jpg", alt: "Couple 5" },
+  { src: "/images/IMG_1274.JPG", alt: "Couple 1" },
+  { src: "/images/IMG_1274.JPG", alt: "Couple 2" },
+  { src: "/images/IMG_1277.JPG", alt: "Couple 3" },
+  { src: "/images/IMG_1278.JPG", alt: "Couple 4" },
+  { src: "/images/IMG_1282.JPG", alt: "Couple 5" },
+  { src: "/images/IMG_1286.JPG", alt: "Couple 5" },
+  { src: "/images/IMG_1289.JPG", alt: "Couple 5" },
+  { src: "/images/IMG_1290.JPG", alt: "Couple 5" },
+  { src: "/images/IMG_1291.JPG", alt: "Couple 5" },
+  { src: "/images/IMG_1293.JPG", alt: "Couple 5" },
+  { src: "/images/IMG_1302.JPG", alt: "Couple 5" },
 ];
 
 const AUTOPLAY_MS = 3000;
