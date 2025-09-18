@@ -86,7 +86,7 @@ const TimeUnit: React.FC<{ label: string; value: number }> = ({ label, value }) 
 
 
 /** ---- countdown flip ---- */
-const CountdownFlip: React.FC<{ target?: Date; title?: string }> = ({ target = targetVN, title = "Đếm ngược tới ngày cưới" }) => {
+const CountdownFlip: React.FC<{ target?: Date; title?: string }> = ({ target = targetVN, title = "Đếm ngược tới khoảng khắc thiếng liêng" }) => {
   const [t, setT] = React.useState(() => diff(target));
 
   React.useEffect(() => {

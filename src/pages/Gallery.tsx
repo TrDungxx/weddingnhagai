@@ -93,10 +93,10 @@ const Gallery: React.FC = () => {
         >
           <Camera className="w-8 h-8 text-rose-500 mx-auto mb-4" />
           <h1 className="font-serif text-3xl md:text-4xl text-gray-800 mb-3">
-            Thư Viện Ảnh
+            Album ảnh
           </h1>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Tự động lướt vô tận, mượt mà ✨
+             ✨✨✨✨✨
           </p>
         </motion.div>
 
