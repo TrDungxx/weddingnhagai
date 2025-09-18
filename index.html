@@ -8,17 +8,17 @@
   </head>
   <body>
   <div id="root"></div>
-  <script type="module" src="/src/main.tsx"></script>
+<script type="module" src="/src/main.tsx"></script>
 
-  <!-- Form ẩn cho Netlify detect -->
-  <form name="rsvp" data-netlify="true" netlify-honeypot="bot-field" hidden>
-    <input type="text" name="name" />
-    <input type="email" name="email" />
-    <input type="tel" name="phone" />
-    <input type="text" name="attendance" />
-    <input type="text" name="guests" />
-    <input type="text" name="dietary" />
-    <textarea name="message"></textarea>
-  </form>
+<form name="rsvp" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <input type="hidden" name="form-name" value="rsvp" />  <!-- thêm dòng này -->
+  <input type="text" name="name" />
+  <input type="email" name="email" />
+  <input type="tel" name="phone" />
+  <input type="text" name="attendance" />
+  <input type="text" name="guests" />
+  <input type="text" name="dietary" />
+  <textarea name="message"></textarea>
+</form>
 </body>
 </html>
