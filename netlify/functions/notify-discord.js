@@ -17,7 +17,7 @@ export async function handler(event) {
 
     // Tạo nội dung gọn đẹp
     const lines = [
-      `📩 **New RSVP**`,
+      `📩 **Neww RSVP**`,
       `• **Name**: ${d.name || "—"}`,
       `• **Email**: ${d.email || "—"}`,
       `• **Phone**: ${d.phone || "—"}`,
