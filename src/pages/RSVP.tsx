@@ -1,34 +1,59 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Send, Users, Heart, CheckCircle,MapPin } from 'lucide-react';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { Send, Users, Heart, CheckCircle, MapPin } from "lucide-react";
 
 const RSVP = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    attendance: 'yes',
-    guests: '1',
-    dietary: '',
-    message: ''
+    name: "",
+    email: "",
+    phone: "",
+    attendance: "yes",
+    guests: "1",
+    dietary: "",
+    message: "",
+    ["bot-field"]: "" // honeypot anti-spam
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // encode form data for x-www-form-urlencoded
+  const encode = (data: Record<string, string>) =>
+    Object.keys(data)
+      .map(
+        (key) => encodeURIComponent(key) + "=" + encodeURIComponent(data[key] ?? "")
+      )
+      .join("&");
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate form submission
-    setTimeout(() => {
+    setSubmitting(true);
+
+    try {
+      await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: encode({
+          "form-name": "rsvp", // phải khớp với index.html
+          ...formData,
+        }),
+      });
       setIsSubmitted(true);
-    }, 1000);
+    } catch (err) {
+      alert("❌ Gửi RSVP thất bại, vui lòng thử lại!");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
+  // Sau khi submit thành công
   if (isSubmitted) {
     return (
       <div className="min-h-screen pt-20 pb-16 px-4 flex items-center justify-center">
@@ -44,7 +69,8 @@ const RSVP = () => {
               Cảm ơn bạn!
             </h1>
             <p className="text-gray-600 mb-6">
-              Chúng tôi đã nhận được phản hồi của bạn. Rất mong được gặp bạn trong ngày trọng đại!
+              Chúng tôi đã nhận được phản hồi của bạn. Rất mong được gặp bạn
+              trong ngày trọng đại!
             </p>
             <Heart className="w-8 h-8 text-rose-500 mx-auto fill-current" />
           </div>
@@ -68,18 +94,32 @@ const RSVP = () => {
             Xác Nhận Tham Dự
           </h1>
           <p className="text-gray-600 max-w-xl mx-auto">
-            Hãy cho chúng tôi biết bạn có thể tham dự không để chúng tôi chuẩn bị chu đáo nhất
+            Hãy cho chúng tôi biết bạn có thể tham dự không để chúng tôi chuẩn
+            bị chu đáo nhất
           </p>
         </motion.div>
 
         {/* Form */}
         <motion.form
+          name="rsvp"
+          method="POST"
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+          onSubmit={handleSubmit}
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          onSubmit={handleSubmit}
           className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-2xl"
         >
+          {/* Hidden input for Netlify */}
+          <input type="hidden" name="form-name" value="rsvp" />
+          <input
+            type="text"
+            name="bot-field"
+            className="hidden"
+            onChange={handleChange}
+          />
+
           <div className="space-y-6">
             {/* Name */}
             <div>
@@ -138,7 +178,7 @@ const RSVP = () => {
                     type="radio"
                     name="attendance"
                     value="yes"
-                    checked={formData.attendance === 'yes'}
+                    checked={formData.attendance === "yes"}
                     onChange={handleChange}
                     className="text-rose-500 focus:ring-rose-500"
                   />
@@ -149,7 +189,7 @@ const RSVP = () => {
                     type="radio"
                     name="attendance"
                     value="no"
-                    checked={formData.attendance === 'no'}
+                    checked={formData.attendance === "no"}
                     onChange={handleChange}
                     className="text-gray-500 focus:ring-gray-500"
                   />
@@ -159,10 +199,10 @@ const RSVP = () => {
             </div>
 
             {/* Guests Count */}
-            {formData.attendance === 'yes' && (
+            {formData.attendance === "yes" && (
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
+                animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
               >
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -184,10 +224,10 @@ const RSVP = () => {
             )}
 
             {/* Dietary Requirements */}
-            {formData.attendance === 'yes' && (
+            {formData.attendance === "yes" && (
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
+                animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
               >
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -224,51 +264,48 @@ const RSVP = () => {
               type="submit"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
+              disabled={submitting}
               className="w-full flex items-center justify-center space-x-2 bg-gradient-to-r from-rose-500 to-pink-600 text-white py-4 px-6 rounded-xl font-medium shadow-lg hover:shadow-xl transition-all duration-300"
             >
               <Send className="w-5 h-5" />
-              <span>Gửi xác nhận</span>
+              <span>{submitting ? "Đang gửi..." : "Gửi xác nhận"}</span>
             </motion.button>
           </div>
         </motion.form>
       </div>
-       {/* Map Placeholder */}
-        <motion.div
-  initial={{ opacity: 0, y: 30 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.6 }}
-  viewport={{ once: true }}
-  className="mt-12 bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg text-center"
->
-  <h2 className="font-serif text-2xl text-gray-800 mb-6">
-    Bản Đồ Vị Trí
-  </h2>
 
-  {/* Google Map */}
-  <div className="h-64 rounded-xl overflow-hidden">
-    <iframe
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.8321157405894!2d105.82817387599799!3d20.99936578878616!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ac7d096886fb%3A0x8760dc7a78ec917!2zVHLhu5FuZyDEkOG7k25nIFBhbGFjZSBD4bqjbmggSOG7kw!5e0!3m2!1svi!2s!4v1758190799508!5m2!1svi!2s"
-      width="100%"
-      height="100%"
-      style={{ border: 0 }}
-      allowFullScreen
-      loading="lazy"
-      referrerPolicy="no-referrer-when-downgrade"
-    ></iframe>
-  </div>
+      {/* Map */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        viewport={{ once: true }}
+        className="mt-12 bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg text-center"
+      >
+        <h2 className="font-serif text-2xl text-gray-800 mb-6">Bản Đồ Vị Trí</h2>
+        <div className="h-64 rounded-xl overflow-hidden">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.8321157405894!2d105.82817387599799!3d20.99936578878616!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ac7d096886fb%3A0x8760dc7a78ec917!2zVHLhu5FuZyDEkOG7k25nIFBhbGFjZSBD4bqjbmggSOG7kw!5e0!3m2!1svi!2s!4v1758190799508!5m2!1svi!2s"
+            width="100%"
+            height="100%"
+            style={{ border: 0 }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
 
-  {/* Nút mở app Google Maps */}
-  <a
-    href="https://www.google.com/maps/dir/?api=1&destination=173B+Trường+Chinh,+Khương+Mai,+Thanh+Xuân,+Hà+Nội"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="mt-5 inline-flex items-center px-5 py-3 bg-rose-500 text-white rounded-xl shadow hover:bg-rose-600 transition"
-  >
-    <MapPin className="w-5 h-5 mr-2" />
-    Mở bằng Google Maps
-  </a>
-</motion.div>
-
+        {/* Nút mở Google Maps */}
+        <a
+          href="https://www.google.com/maps/dir/?api=1&destination=173B+Trường+Chinh,+Khương+Mai,+Thanh+Xuân,+Hà+Nội"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-5 inline-flex items-center px-5 py-3 bg-rose-500 text-white rounded-xl shadow hover:bg-rose-600 transition"
+        >
+          <MapPin className="w-5 h-5 mr-2" />
+          Mở bằng Google Maps
+        </a>
+      </motion.div>
     </div>
   );
 };
