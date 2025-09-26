@@ -11,7 +11,7 @@ const RSVP = () => {
     guests: "1",
     dietary: "",
     message: "",
-    ["bot-field"]: "" // honeypot anti-spam
+    ["bot-field"]: "", // honeypot anti-spam
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -28,7 +28,8 @@ const RSVP = () => {
   const encode = (data: Record<string, string>) =>
     Object.keys(data)
       .map(
-        (key) => encodeURIComponent(key) + "=" + encodeURIComponent(data[key] ?? "")
+        (key) =>
+          encodeURIComponent(key) + "=" + encodeURIComponent(data[key] ?? "")
       )
       .join("&");
 
@@ -282,10 +283,12 @@ const RSVP = () => {
         viewport={{ once: true }}
         className="mt-12 bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg text-center"
       >
-        <h2 className="font-serif text-2xl text-gray-800 mb-6">Bản Đồ Vị Trí</h2>
+        <h2 className="font-serif text-2xl text-gray-800 mb-6">
+          Bản Đồ Vị Trí
+        </h2>
         <div className="h-64 rounded-xl overflow-hidden">
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.8321157405894!2d105.82817387599799!3d20.99936578878616!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ac7d096886fb%3A0x8760dc7a78ec917!2zVHLhu5FuZyDEkOG7k25nIFBhbGFjZSBD4bqjbmggSOG7kw!5e0!3m2!1svi!2s!4v1758190799508!5m2!1svi!2s"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3717.590868852931!2d105.72994027600319!3d21.28765667883465!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3134fcd7a8d0e1ef%3A0x4dd138fa00db4fc!2zNDc2IFRyxrDhu51uZyBDaGluaCwgxJDhu5NuZyBYdcOibiwgUGjDumMgWcOqbiwgVsSpbmggUGjDumMsIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1758882022294!5m2!1svi!2s"
             width="100%"
             height="100%"
             style={{ border: 0 }}
@@ -297,7 +300,7 @@ const RSVP = () => {
 
         {/* Nút mở Google Maps */}
         <a
-          href="https://www.google.com/maps/dir/?api=1&destination=173B+Trường+Chinh,+Khương+Mai,+Thanh+Xuân,+Hà+Nội"
+          href="https://www.google.com/maps/dir/?api=1&destination=476+Trường+Chinh,+Đồng+Xuân,+Phúc+Yên,+Vĩnh+Phúc,+Việt+Nam"
           target="_blank"
           rel="noopener noreferrer"
           className="mt-5 inline-flex items-center px-5 py-3 bg-rose-500 text-white rounded-xl shadow hover:bg-rose-600 transition"
