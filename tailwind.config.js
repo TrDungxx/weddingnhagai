@@ -5,4 +5,11 @@ export default {
     extend: {},
   },
   plugins: [],
+
+  extend: {
+  fontFamily: {
+    wedding: ["Great Vibes", "cursive"],
+  },
+}
+
 };

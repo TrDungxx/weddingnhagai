@@ -12,7 +12,7 @@ type CoverProps = {
 const Cover: React.FC<CoverProps> = ({
   bride = "Vũ Hoa",
   groom = "Trung Dũng",
-  date = "07.10.2025",
+  date = "06.10.2025",
   onExplore,
   photoUrl = "/images/decor1.jpg", // đổi thành ảnh của bạn
 }) => {
