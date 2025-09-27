@@ -3,7 +3,7 @@ import { CalendarHeart } from "lucide-react";
 
 /** ---- helpers ---- */
 const pad = (n: number, len = 2) => n.toString().padStart(len, "0");
-const targetVN = new Date("2025-10-07T11:00:00+07:00"); // 11:00, 07/10/2025 (GMT+7)
+const targetVN = new Date("2025-10-06T16:00:00+07:00"); // 11:00, 07/10/2025 (GMT+7)
 
 function diff(to: Date) {
   const now = Date.now();
