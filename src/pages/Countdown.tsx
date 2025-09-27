@@ -17,7 +17,7 @@ function diff(to: Date) {
   return { days, hours, minutes, seconds, done: end <= now };
 }
 
-/** ---- flip digit ---- */
+/** ---- flip digitTT ---- */
 type FlipDigitProps = { value: number; width?: number; height?: number };
 
 const FlipDigit: React.FC<{ digit: string; width?: number; height?: number }> = ({
